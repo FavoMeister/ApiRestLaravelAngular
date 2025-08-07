@@ -5,22 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Car extends Model
+class Checkbox extends Model
 {
     use SoftDeletes;
-    //protected $table = 'cars';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'user_id',
-        'course_id',
-        'cantidad',
-        //'status',
-    ];
 
     public $timestamps = true;
 
@@ -36,5 +23,10 @@ class Car extends Model
     // One to Many (Inverse)
     public function course(){
         return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    // One to Many (Inverse)
+    public function video(){
+        return $this->belongsTo(Video::class, 'video_id');
     }
 }

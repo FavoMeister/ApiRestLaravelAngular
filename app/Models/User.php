@@ -19,8 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'role',
         'email',
         'password',
+        'description',
+        'image',
     ];
 
     /**
@@ -44,5 +48,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /*
+     * Relationships
+    */
+
+    // Many to Many
+    public function courses() {
+        return $this->belongsToMany(Course::class, 'sales', 'user_id', 'course_id')
+               ->withPivot('quantity', 'price', 'discount');
+    }
+
+    // One to Many
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }

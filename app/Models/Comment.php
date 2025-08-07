@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Car extends Model
+class Comment extends Model
 {
     use SoftDeletes;
-    //protected $table = 'cars';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
-        'course_id',
-        'cantidad',
-        //'status',
+        'title',
+        'comment',
+        'image',
+        'user_id ',
+        'video_id ',
     ];
 
     public $timestamps = true;
@@ -29,12 +28,17 @@ class Car extends Model
     */
 
     // One to Many (Inverse)
+    public function video(){
+        return $this->belongsTo(Video::class, 'video_id');
+    }
+
+    // One to Many (Inverse)
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // One to Many (Inverse)
-    public function course(){
-        return $this->belongsTo(Course::class, 'course_id');
+    // One to Many
+    public function responses(){
+        return $this->hasMany(Response::class);
     }
 }
